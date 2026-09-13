@@ -1,0 +1,138 @@
+# ==========================================
+# Archivos de Sistema y Editor
+# ==========================================
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+*.log
+lab1_devops.docx
+
+
+# IDEs (VS Code, IntelliJ, Eclipse)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+bin/
+
+# ==========================================
+# Backend: Java / Spring Boot (Maven)
+# ==========================================
+# Carpeta de compilación de Maven
+target/
+*.ca
+
+# Wrapper de Maven (opcional ignóralo si no usas el ejecutable embebido)
+.mvn/wrapper/maven-wrapper.jar
+
+# Log de ejecución
+logs/
+*.log
+
+# Archivos empaquetados resultantes (JAR/WAR se generan en el pipeline CI/CD)
+*.jar
+*.war
+*.ear
+
+# Logs de error de la JVM
+hs_err_pid*
+replay_pid*
+
+# ==========================================
+# Frontend: React / Vite / Node.js
+# ==========================================
+# Carpeta de dependencias
+node_modules/
+.pnpm-store/
+
+# Carpeta de salida del Build de React/Vite
+dist/
+dist-ssr/
+build/
+
+# Cache de Vite y linters
+.vite/
+.eslintcache
+
+# Cobertura de pruebas
+coverage/
+
+# ==========================================
+# Seguridad y Secretos (CRÍTICO PARA DEVOPS)
+# ==========================================
+# Nunca subir claves ni variables locales al repositorio
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.pem
+
+
+
+Git ignore de Front/lavo1_Devops/.gitignore
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+git ignore de backend/lavo1_Devops/.gitignore
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
