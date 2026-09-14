@@ -19,10 +19,23 @@ steps:
     npm run build
   displayName: 'Build Frontend'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'Front/dist'
+    ArtifactName: 'frontend'
+    publishLocation: 'Container'
+  displayName: 'Publicar Artifact Frontend'
+
 - script: |
     cd back
     chmod +x mvnw
     ./mvnw test
     ./mvnw package
   displayName: 'Build Backend'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'back/target'
+    ArtifactName: 'backend'
+    publishLocation: 'Container'
+  displayName: 'Publicar Artifact Backend'
 
