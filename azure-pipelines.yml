@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo "Iniciando CI"
+  displayName: 'Iniciar pipeline'
+
+- script: |
+    cd Front
+    npm ci
+    npm run build
+  displayName: 'Build Frontend'
+
+- script: |
+    cd back
+    chmod +x mvnw
+    ./mvnw test
+    ./mvnw package
+  displayName: 'Build Backend'
