@@ -9,33 +9,69 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo "Iniciando CI"
-  displayName: 'Iniciar pipeline'
+stages:
 
-- script: |
-    cd Front
-    npm ci
-    npm run build
-  displayName: 'Build Frontend'
+- stage: CI
+  displayName: 'Continuous Integration'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: 'Front/dist'
-    ArtifactName: 'frontend'
-    publishLocation: 'Container'
-  displayName: 'Publicar Artifact Frontend'
+  jobs:
+  - job: Build
+    displayName: 'Build and Test'
 
-- script: |
-    cd back
-    chmod +x mvnw
-    ./mvnw test
-    ./mvnw package
-  displayName: 'Build Backend'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: 'back/target'
-    ArtifactName: 'backend'
-    publishLocation: 'Container'
-  displayName: 'Publicar Artifact Backend'
+    steps:
 
+    - script: echo "Iniciando CI"
+      displayName: 'Iniciar pipeline'
+
+    - script: |
+        cd Front
+        npm ci
+        npm run build
+      displayName: 'Build Frontend'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'Front/dist'
+        ArtifactName: 'frontend'
+        publishLocation: 'Container'
+      displayName: 'Publicar Artifact Frontend'
+
+    - script: |
+        cd back
+        chmod +x mvnw
+        ./mvnw test
+        ./mvnw package
+      displayName: 'Build Backend'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'back/target'
+        ArtifactName: 'backend'
+        publishLocation: 'Container'
+      displayName: 'Publicar Artifact Backend'
+
+- stage: CD
+  displayName: 'Continuous Delivery'
+
+  dependsOn: CI
+  condition: succeeded()
+
+  jobs:
+  - job: DeployBackend
+    displayName: 'Deploy Backend'
+
+    steps:
+      - task: DownloadBuildArtifacts@1
+        inputs:
+          buildType: 'current'
+          downloadType: 'single'
+          artifactName: 'backend'
+          downloadPath: '$(System.ArtifactsDirectory)'
+        displayName: 'Descargar Artifact Backend'
+      - task: AzureWebApp@1
+        inputs:
+          azureSubscription: 'sc-lavoratorio-azure'
+          appType: 'webAppLinux'
+          appName: 'lavoratorio-backend'
+          package: '$(System.ArtifactsDirectory)/backend/*.jar'
+        displayName: 'Deploy Backend'
