@@ -95,9 +95,14 @@ stages:
         find "$(Build.ArtifactStagingDirectory)" -maxdepth 3 -type f
       displayName: 'Verificar archivos Frontend'
 
+    - script: |
+        mkdir -p $(System.DefaultWorkingDirectory)/frontend
+        cp -r $(Build.ArtifactStagingDirectory)/frontend/* $(System.DefaultWorkingDirectory)/frontend/
+      displayName: 'Copiar build a working directory'
+
     - task: AzureStaticWebApp@0
       inputs:
-        app_location: '$(Build.ArtifactStagingDirectory)/frontend'
+        app_location: 'frontend'
         output_location: ''
         skip_app_build: true
         azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN)'
