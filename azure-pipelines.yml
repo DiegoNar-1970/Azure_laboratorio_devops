@@ -49,13 +49,15 @@ stages:
         ArtifactName: 'backend'
         publishLocation: 'Container'
       displayName: 'Publicar Artifact Backend'
-
+## DEPLOYS
 - stage: CD
   displayName: 'Continuous Delivery'
 
+## VALIDAMOS QUE SE EJECUTE PRIMERO LOS TEST Y BUIDS CORRECTAMENTE Y EJECUTAMOS
   dependsOn: CI
   condition: succeeded()
 
+## DEPLOY BACKEND
   jobs:
   - job: DeployBackend
     displayName: 'Deploy Backend'
@@ -75,3 +77,23 @@ stages:
           appName: 'lavoratorio-backend'
           package: '$(System.ArtifactsDirectory)/backend/*.jar'
         displayName: 'Deploy Backend'
+
+## DEPLOY FRONTEND
+  - job: DeployFrontend
+    displayName: 'Deploy Frontend'
+    steps:
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'frontend'
+        downloadPath: '$(System.ArtifactsDirectory)'
+      displayName: 'Descargar Artifact Frontend'
+
+    - task: AzureStaticWebApp@0
+      inputs:
+        app_location: '$(System.ArtifactsDirectory)/frontend'
+        output_location: ''
+        skip_app_build: true
+        azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN)'
+      displayName: 'Deploy Frontend'
