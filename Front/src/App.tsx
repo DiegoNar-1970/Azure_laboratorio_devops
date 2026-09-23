@@ -1,6 +1,7 @@
 
 import './App.css'
 import WelcomeView from './WelcomeView.tsx'
+import Calculator from './Calculator.tsx'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <WelcomeView />
       <h1>¡Bienvenido !</h1>
       <p>Nos alegra tenerte aquí 🚀</p>
+      <Calculator />
     </div>
     </>
   )
