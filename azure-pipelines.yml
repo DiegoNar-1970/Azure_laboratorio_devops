@@ -87,12 +87,17 @@ stages:
         buildType: 'current'
         downloadType: 'single'
         artifactName: 'frontend'
-        downloadPath: '$(System.ArtifactsDirectory)'
+        downloadPath: '$(Build.ArtifactStagingDirectory)'
       displayName: 'Descargar Artifact Frontend'
+
+    - script: |
+        echo "Contenido del artifact:"
+        find "$(Build.ArtifactStagingDirectory)" -maxdepth 3 -type f
+      displayName: 'Verificar archivos Frontend'
 
     - task: AzureStaticWebApp@0
       inputs:
-        app_location: '$(System.ArtifactsDirectory)/frontend'
+        app_location: '$(Build.ArtifactStagingDirectory)/frontend'
         output_location: ''
         skip_app_build: true
         azure_static_web_apps_api_token: '$(AZURE_STATIC_WEB_APPS_API_TOKEN)'
