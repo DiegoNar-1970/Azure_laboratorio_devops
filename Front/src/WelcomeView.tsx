@@ -65,7 +65,7 @@ export const WelcomeView: React.FC = () => {
       <main className="w-full max-w-md flex flex-col items-center text-center my-auto z-20 space-y-6">
         <div className="space-y-2">
           <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-b from-white via-gray-200 to-gray-500 bg-clip-text text-transparent">
-            Bienvenido
+            WELCOME TO THE FUTURE OF AI
           </h1>
           <p className="text-sm text-gray-400 font-medium max-w-xs mx-auto">
             Explora las últimas innovaciones tecnológicas impulsadas por Inteligencia Artificial.
